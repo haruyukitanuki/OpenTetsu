@@ -5,6 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>OpenTetsu.Adapters</RootNamespace>
+        <Version>1.0.0</Version>
+        
+        <AssemblyName>OpenTetsuAPIAdapters</AssemblyName>
+        <Product>OpenTetsu API</Product>
+        <Company>Tanukigawa Dentetsu</Company>
+        <Copyright>2024, Haruyuki Tanukiji, under Mozilla Public License 2.0 (MPL-2.0)</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
