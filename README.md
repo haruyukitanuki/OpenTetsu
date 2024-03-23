@@ -95,6 +95,10 @@ You can view the list of classes below and reference the code of an existing ada
 </details>
 
 ## Sample Data
+
+<details>
+<summary>View sample data</summary>
+
 ```json
 {
   "runNumber": "573",
@@ -303,6 +307,7 @@ You can view the list of classes below and reference the code of an existing ada
   }
 }
 ```
+</details>
 
 ## 💾 Tanuden OSS
 OpenTetsu is Open Source Software (OSS), licensed under Mozilla Public License 2.0. You may freely distribute, use and modify code provided to you in repository in accordance with MPL-2.0.
