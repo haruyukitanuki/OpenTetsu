@@ -94,6 +94,216 @@ You can view the list of classes below and reference the code of an existing ada
     * TrainState
 </details>
 
+## Sample Data
+```json
+{
+  "runNumber": "573",
+  "currentTime": "2024-03-23T05:19:34.233+08:00",
+  "diagram": {
+    "direction": "Outbound",
+    "boundFor": "館浜",
+    "remainingDistance": 9690.928,
+    "serviceType": "普通",
+    "stations": [
+      {
+        "distanceFromKmZero": 0,
+        "index": 0,
+        "name": "浜園上り本線",
+        "positionName": "浜園駅入換下り",
+        "stopType": "OperationStop",
+        "timings": {
+          "arrival": "2024-03-23T05:16:10+08:00",
+          "departure": "2024-03-23T05:19:30+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 192.4,
+        "index": 1,
+        "name": "浜園",
+        "positionName": "浜園駅下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:20:15+08:00",
+          "departure": "2024-03-23T05:21:05+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 1722.6,
+        "index": 2,
+        "name": "津崎",
+        "positionName": "津崎駅3番下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:22:45+08:00",
+          "departure": "2024-03-23T05:23:10+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 3698.2,
+        "index": 3,
+        "name": "虹ケ浜",
+        "positionName": "虹ケ浜駅下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:25:05+08:00",
+          "departure": "2024-03-23T05:25:25+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 5638.4,
+        "index": 4,
+        "name": "海岸公園",
+        "positionName": "海岸公園駅下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:27:20+08:00",
+          "departure": "2024-03-23T05:27:40+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 6958.6,
+        "index": 5,
+        "name": "河原崎",
+        "positionName": "河原崎駅下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:29:15+08:00",
+          "departure": "2024-03-23T05:29:35+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 7990.6,
+        "index": 6,
+        "name": "駒野",
+        "positionName": "駒野駅3番下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:31:00+08:00",
+          "departure": "2024-03-23T05:31:30+08:00"
+        }
+      },
+      {
+        "distanceFromKmZero": 9703.6,
+        "index": 7,
+        "name": "館浜",
+        "positionName": "館浜駅4番下り",
+        "stopType": "PassengerStop",
+        "timings": {
+          "arrival": "2024-03-23T05:34:55+08:00",
+          "departure": "2024-03-23T05:35:25+08:00"
+        }
+      }
+    ]
+  },
+  "nextStation": {
+    "distanceFromTrain": 179.732,
+    "distanceFromKmZero": 192.4,
+    "index": 1,
+    "name": "浜園",
+    "positionName": "浜園駅下り",
+    "stopType": "PassengerStop",
+    "timings": {
+      "arrival": "2024-03-23T05:20:15+08:00",
+      "departure": "2024-03-23T05:21:05+08:00"
+    }
+  },
+  "trainState": {
+    "carStates": [
+      {
+        "amperage": 482.8885,
+        "bcPressure": 0,
+        "carNo": 1,
+        "isDoorClosed": true,
+        "model": "5300",
+        "properties": {
+          "pantograph": false,
+          "driverCab": true,
+          "conductorCab": true,
+          "motor": true,
+          "cabDirection": "Outbound"
+        }
+      },
+      {
+        "amperage": 0,
+        "bcPressure": 0,
+        "carNo": 2,
+        "isDoorClosed": true,
+        "model": "5300",
+        "properties": {
+          "pantograph": true,
+          "driverCab": false,
+          "conductorCab": false,
+          "motor": false,
+          "cabDirection": null
+        }
+      },
+      {
+        "amperage": 0,
+        "bcPressure": 0,
+        "carNo": 3,
+        "isDoorClosed": true,
+        "model": "5300",
+        "properties": {
+          "pantograph": false,
+          "driverCab": false,
+          "conductorCab": false,
+          "motor": false,
+          "cabDirection": null
+        }
+      },
+      {
+        "amperage": 482.8885,
+        "bcPressure": 0,
+        "carNo": 4,
+        "isDoorClosed": true,
+        "model": "5300",
+        "properties": {
+          "pantograph": false,
+          "driverCab": true,
+          "conductorCab": true,
+          "motor": true,
+          "cabDirection": "Inbound"
+        }
+      }
+    ],
+    "consist": 4,
+    "lamps": {
+      "ats": {
+        "brakeApplication": false,
+        "inOperation": true,
+        "isolated": false
+      },
+      "eBrake": false,
+      "ebTimer": false,
+      "overload": false,
+      "pilot": true,
+      "regenBrake": false
+    },
+    "mrPressure": 700,
+    "nextSpeedLimit": {
+      "distance": -1,
+      "limit": -1,
+      "type": "SpeedLimit"
+    },
+    "speed": 15.51307,
+    "speedLimit": 25,
+    "speedLimitType": "Signal",
+    "gradient": -3,
+    "distanceFromKmZero": 12.672
+  },
+  "signalStates": [],
+  "atsState": {
+    "stopPattern": null,
+    "speed": 30,
+    "state": "無表示"
+  },
+  "controllerState": {
+    "notch": 3,
+    "reverser": 1
+  }
+}
+```
+
 ## 💾 Tanuden OSS
 OpenTetsu is Open Source Software (OSS), licensed under Mozilla Public License 2.0. You may freely distribute, use and modify code provided to you in repository in accordance with MPL-2.0.
 
