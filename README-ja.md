@@ -36,7 +36,7 @@ OpenTetsu は単なる API 標準であり、シミュレータデータを Open
 OpenTetsu をプロジェクトにインストールするには:
 
 1.  リリースに移動して、最新の OpenTetsu API ライブラリ DLL ファイルをダウンロードします。
-2.  同じセクションで、シミュレーターに適したアダプターを見つけてダウンロードします。
+2.  同じセクションで、アダプターのDLLをダウンロードします。
 3.  プロジェクトに OpenTetsu を参照します。
     *   参照の追加についてのヘルプが必要ですか？ [Visual Studio のドキュメント](https://learn.microsoft.com/ja-jp/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager?view=vs-2022) または [JetBrains Rider のドキュメント](https://www.jetbrains.com/help/rider/Extending_Your_Solution.html#project_assembly_references) を参照してください。
 4.  NuGet から必要な依存関係である `Newtonsoft.Json` をインストールします。
@@ -47,7 +47,7 @@ OpenTetsu をプロジェクトにインストールするには:
 この例は、TRAIN CREW での使用を想定して `OpenTetsu.Adapters.TrainCrewAdapter` を使用して記述されています。
 
 ```cs
-using TrainCrew; // Library provided by the simulator
+using TrainCrew; // TRAINCREWのコントローラDLL
 using OpenTetsu.Commons;
 using OpenTetsu.Adapters;
 
@@ -55,13 +55,13 @@ public static class Program
 {
     public static void Main
     {
-        // Get Raw data from the simulator
+        // シミュレーターから生データを取得
         TrainCrewInput.Init();
         var trainCrewState = TrainCrewInput.GetTrainState();
         TrainCrewInput.RequestData(DataRequest.Signal);
         var trainCrewSignalList = TrainCrewInput.signals;
 
-        // Convert to OpenTetsu
+        // OpenTetsuに変換
         OpenTetsuData convertedData = TrainCrewAdapter.FromTrainCrew(trainCrewState, trainCrewSignalList)
 
         ...

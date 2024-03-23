@@ -34,7 +34,7 @@ As OpenTetsu is just an API standard, you will need to use/write an adapter in o
 ## 📂 Installation
 To install OpenTetsu into your project:
 1. Go to the releases section to download the latest OpenTetsu API library DLL file.
-2. In the same section, find and download the appropriate adapter for the simulator you are developing for.
+2. In the same section, download the adapter DLL file.
 3. Reference OpenTetsu in your project.
    - Need help referencing? View docs for [Visual Studio](https://learn.microsoft.com/en-us/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager?view=vs-2022) or [JetBrains Rider](https://www.jetbrains.com/help/rider/Extending_Your_Solution.html#project_assembly_references).
 4. Install required dependency `Newtonsoft.Json` from NuGet.
