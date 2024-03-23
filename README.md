@@ -9,7 +9,7 @@ Originally created to support development of Tanuden TIMS for TRAIN CREW.
 > このドキュメントは英語版と日本語版があります。
 > 
 > [![lang - en](https://img.shields.io/static/v1?label=lang&message=en&color=397eed)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README.md) 
-> [![言語 - jp](https://img.shields.io/static/v1?label=言語&message=jp&color=e32b47)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README-jp.md)
+> [![言語 - ja](https://img.shields.io/static/v1?label=言語&message=ja&color=e32b47)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README-ja.md)
 
 ## 📖 Why create a standard?
 Handling and supporting data structures for multiple platforms and train simulator software can be hard and sometimes even tedious to do so.

@@ -8,7 +8,7 @@ OpenTetsu は、日本の電車シミュレータとサードパーティのソ�
 > This documentation is available in English & Japanese
 > 
 > [![lang - en](https://img.shields.io/static/v1?label=lang&message=en&color=397eed)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README.md) 
-> [![言語 - jp](https://img.shields.io/static/v1?label=言語&message=jp&color=e32b47)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README-jp.md)
+> [![言語 - ja](https://img.shields.io/static/v1?label=言語&message=ja&color=e32b47)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README-ja.md)
 
 ## 📖 なぜ標準を作成するのですか？
 
