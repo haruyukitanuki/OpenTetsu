@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>OpenTetsu.Adapters</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="TrainCrewInput">
+        <HintPath>..\..\tanuden-tims\tanuden-native\dll\TrainCrewInput.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OpenTetsu.Commons\OpenTetsu.Commons.csproj" />
+    </ItemGroup>
+
+</Project>

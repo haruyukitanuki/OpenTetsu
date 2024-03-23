@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTetsu.Commons", "OpenTetsu.Commons\OpenTetsu.Commons.csproj", "{2AC321F4-7BD3-4C55-9A34-B9232AC5BE7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTetsu.Adapters", "OpenTetsu.Adapters\OpenTetsu.Adapters.csproj", "{3F825EE1-0DBF-4DEE-AE5F-F6E3C7263ED2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AC321F4-7BD3-4C55-9A34-B9232AC5BE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC321F4-7BD3-4C55-9A34-B9232AC5BE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC321F4-7BD3-4C55-9A34-B9232AC5BE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC321F4-7BD3-4C55-9A34-B9232AC5BE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F825EE1-0DBF-4DEE-AE5F-F6E3C7263ED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F825EE1-0DBF-4DEE-AE5F-F6E3C7263ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F825EE1-0DBF-4DEE-AE5F-F6E3C7263ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F825EE1-0DBF-4DEE-AE5F-F6E3C7263ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal
