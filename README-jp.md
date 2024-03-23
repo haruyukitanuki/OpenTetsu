@@ -1,48 +1,50 @@
-# OpenTetsu API Standard
+# OpenTetsu API 標準
+OpenTetsu は、日本の電車シミュレータとサードパーティのソフトウェア・プラグインが円滑にコミュニケーションを取るためのオープンソース API 標準です。
 
-OpenTetsu is an open source API standard for Japanese train simulators and third-party software/plugins to communicate with each other harmoniously.
-
-Originally created to support development of Tanuden TIMS for TRAIN CREW.
+タヌ電TIMSの開発をサポートするために元々作成されました。
 
 > [!TIP]
-> This documentation is available in English & Japanese<br>
-> このドキュメントは英語版と日本語版があります。
+> このドキュメントは英語版と日本語版があります。<br>
+> This documentation is available in English & Japanese
 > 
 > [![lang - en](https://img.shields.io/static/v1?label=lang&message=en&color=397eed)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README.md) 
 > [![言語 - jp](https://img.shields.io/static/v1?label=言語&message=jp&color=e32b47)](https://github.com/haruyukitanuki/OpenTetsu/blob/main/README-jp.md)
 
-## 📖 Why create a standard?
-Handling and supporting data structures for multiple platforms and train simulator software can be hard and sometimes even tedious to do so.
+## 📖 なぜ標準を作成するのですか？
 
-**OpenTetsu was designed with the following goals:**
-- Platform & software agnostic
-- Unify data structures between simulator software
-- Data transmission over REST API (using JSON)
-- Sensible and logical data structure
+複数のプラットフォームや電車シミュレータソフトウェア向けのデータ構造を扱うことは、難しく、時には煩雑になることがあります。
 
-## 🔌 Adapter
-As OpenTetsu is just an API standard, you will need to use/write an adapter in order to translate the raw simulator data to OpenTetsu API.
+**OpenTetsuの目標は**
 
-**Current list of adapters:**
-- TRAIN CREW
+*   プラットフォームやソフトウェアに依存しない
+*   シミュレータソフトウェア間のデータ構造を統一する
+*   REST API を介したデータの送受信（JSONで）
+*   賢明で論理的なデータ構造
 
-> [!NOTE]
-> As of time of writing this, the only available adapter for OpenTetsu API is for TRAIN CREW. 
+## 🔌 アダプター（Adapter）
+OpenTetsu は単なる API 標準であり、シミュレータデータを OpenTetsu API に変換するためにアダプターを使用する必要があります。
+
+**現在のアダプターのリスト:**
+* TRAIN CREW
+
+> [!NOTE] 
+> このドキュメントを作成した時点では、OpenTetsu API の唯一の利用可能なアダプターは TRAIN CREW 用です。
 > 
-> If you wish to write an adapter for other simulators, please open a pull request to contribute to our list of adapters!
+> 他のシミュレーター用のアダプターを作成する場合は、アダプターリストへの貢献のためにPRをよろしくお願いいたします！
 
-## 📂 Installation
-To install OpenTetsu into your project:
-1. Go to the releases section to download the latest OpenTetsu API library DLL file.
-2. In the same section, find and download the appropriate adapter for the simulator you are developing for.
-3. Reference OpenTetsu in your project.
-   - Need help referencing? View docs for [Visual Studio](https://learn.microsoft.com/en-us/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager?view=vs-2022) or [JetBrains Rider](https://www.jetbrains.com/help/rider/Extending_Your_Solution.html#project_assembly_references).
-4. Install required dependency `Newtonsoft.Json` from NuGet.
-5. All good to go!
+## 📂 インストール
+OpenTetsu をプロジェクトにインストールするには:
 
-## ⌨️ Usage
-### With adapter
-This example is written using `OpenTetsu.Adapters.TrainCrewAdapter` for usage on TRAIN CREW.
+1.  リリースに移動して、最新の OpenTetsu API ライブラリ DLL ファイルをダウンロードします。
+2.  同じセクションで、シミュレーターに適したアダプターを見つけてダウンロードします。
+3.  プロジェクトに OpenTetsu を参照します。
+    *   参照の追加についてのヘルプが必要ですか？ [Visual Studio のドキュメント](https://learn.microsoft.com/ja-jp/visualstudio/ide/how-to-add-or-remove-references-by-using-the-reference-manager?view=vs-2022) または [JetBrains Rider のドキュメント](https://www.jetbrains.com/help/rider/Extending_Your_Solution.html#project_assembly_references) を参照してください。
+4.  NuGet から必要な依存関係である `Newtonsoft.Json` をインストールします。
+5.  以上です！
+
+## ⌨️ 使用法
+### アダプターを使用する場合
+この例は、TRAIN CREW での使用を想定して `OpenTetsu.Adapters.TrainCrewAdapter` を使用して記述されています。
 
 ```cs
 using TrainCrew; // Library provided by the simulator
@@ -68,13 +70,14 @@ public static class Program
 
 ```
 
-### Without adapter - Bring your own adapter
-Using OpenTetsu API without an adapter requires you to populate OpenTetsuData classes manually. 
+### アダプターを使用しない場合 - 独自のアダプターを使用
 
-You can view the list of classes below and reference the code of an existing adapter to write your own adapter (Existing adapters can be found in `OpenTetsu.Adapters` in this repository).
+アダプターなしで OpenTetsu API を使用する場合は、OpenTetsuData クラスを手動で埋める必要があります。
+
+以下にクラスのリストを示し、既存のアダプターのコードを参照して独自のアダプターを作成できます（このリポジトリの `OpenTetsu.Adapters` に既存のアダプターがあります）。
 
 <details>
-<summary>List of OpenTetsuData Classes</summary>
+<summary>OpenTetsuDataクラスのリスト</summary>
 
 * **OpenTetsu.Commons**
   * **Ats**
@@ -102,10 +105,10 @@ You can view the list of classes below and reference the code of an existing ada
     * TrainState
 </details>
 
-## Sample Data
+## 例
 
 <details>
-<summary>View sample data</summary>
+<summary>サンプルデータを表示</summary>
 
 ```json
 {
@@ -317,12 +320,11 @@ You can view the list of classes below and reference the code of an existing ada
 ```
 </details>
 
-## 💾 Tanuden OSS
-OpenTetsu is Open Source Software (OSS), licensed under Mozilla Public License 2.0. You may freely distribute, use and modify code provided to you in repository in accordance with MPL-2.0.
+## 💾 タヌ電OSS
+このリポジトリのソースコードはオープンソースです。[Mozilla Public License 2.0ライセンス](https://github.com/haruyukitanuki/OpenTetsu/blob/main/LICENSE.md)に従って、無償で内容を変更、共有、配布することができます。
 
-A copy of the license can be found at the root of the repository [here](https://github.com/haruyukitanuki/OpenTetsu/blob/main/LICENSE.md).
+## 💝 応援をよろしくお願いいたします。
+[狸河電鉄公式Discordサーバー](https://go.tanu.ch/tanuden-discord)・
+[ツイッター](https://go.tanu.ch/twitter)・[YouTube](https://go.tanu.ch/tanutube)
 
-## 💝 Support
-[Tanuden Discord Server](https://go.tanu.ch/tanuden-discord) | [Twitter](https://go.tanu.ch/twitter) | [YouTube](https://go.tanu.ch/tanutube)
-
-**Tanukigawa Electric Railway | Copyright (c) 2024 Haruyuki Tanukiji.**
+**狸河電鉄作品｜Copyright &copy; 2024 狸治 明志（Haruyuki Tanukiji）**
