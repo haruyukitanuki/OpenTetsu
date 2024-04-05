@@ -1,14 +1,14 @@
 ﻿using OpenTetsu.Commons;
-using OpenTetsu.Commons.Ats;
+using OpenTetsu.Commons.ATS;
 using OpenTetsu.Commons.Controller;
 using OpenTetsu.Commons.Route;
-using OpenTetsu.Commons.Signal;
+using OpenTetsu.Commons.SignalState;
 using OpenTetsu.Commons.Train;
 using TrainCrew;
 using CarState = OpenTetsu.Commons.Train.CarState;
 using Station = OpenTetsu.Commons.Route.Station;
 using StopType = OpenTetsu.Commons.Route.StopType;
-using TrainState = OpenTetsu.Commons.TrainState;
+using TrainState = OpenTetsu.Commons.Train.TrainState;
 
 namespace OpenTetsu.Adapters;
 
@@ -99,7 +99,7 @@ public static class TrainCrewAdapter
         // Populate NextStation
         // rawTrainState.stationList.Select((station, index) => 
         NextStation? nextStation = null;
-        if (rawTrainState.stationList.Count != 0)
+        if (rawTrainState.stationList.Count != 0 && rawTrainState.nowStaIndex <= rawTrainState.stationList.Count - 1)
         {
             var nextStationInfo = rawTrainState.stationList[rawTrainState.nowStaIndex];
             nextStation = new NextStation
@@ -117,6 +117,78 @@ public static class TrainCrewAdapter
                 DistanceFromTrain = rawTrainState.nextStaDistance
             };
         }
+
+        // Process carStates
+        // Pass 1: Format into OpenTetsu without CabDirection
+        var carStatesPass1 = carStates.Select((carState, index) => new CarState
+        {
+            CarNo = index + 1,
+            IsDoorClosed = carState.DoorClose,
+            BcPressure = carState.BC_Press,
+            Amperage = carState.Ampare,
+            Model = carState.CarModel,
+            Properties = new CarProperties
+            {
+                Pantograph = carState.HasPantograph,
+                DriverCab = carState.HasDriverCab,
+                ConductorCab = carState.HasConductorCab,
+                Motor = carState.HasMotor
+            }
+        }).ToList();
+        
+        //　Pass 2: Determine CabDirection
+        var carStatesPass2 = carStatesPass1.Select((carState, index) =>
+        {
+            if (!carState.Properties!.ConductorCab) return carState;
+            
+            var isPreviousCarHasDriverCab = index != 0 && carStatesPass1[index - 1].Properties!.DriverCab;
+            var isCurrentCarHasDriverCab = carState.Properties!.DriverCab;
+            
+            // First and last car
+            if (index == 0)
+            {
+                carState.Properties.CabDirection = Direction.Outbound;
+                return carState;
+            }
+            if (index == carStatesPass1.Count - 1)
+            {
+                carState.Properties.CabDirection = Direction.Inbound;
+                return carState;
+            }
+            
+            // Middle cars
+            if (isCurrentCarHasDriverCab)
+            {
+                carState.Properties.CabDirection = Direction.Outbound;
+            }
+            
+            return carState;
+        }).ToList();
+        
+        // Pass 3: Flip any car that has DriverCab and is facing the wrong direction
+        var carStatesPass3 = carStatesPass2.Select((carState, index) =>
+        {
+            // Ignore first and last
+            if (index == 0 || index == carStatesPass2.Count - 1) return carState;
+            
+            // If all cars has driving cabs, alternate between Inbound and Outbound
+            
+            var previousCar = carStatesPass2[index - 1];
+            var isPreviousCarHasDriverCab = index != 0 && carStatesPass1[index - 1].Properties!.DriverCab;
+
+            if (previousCar.Properties.CabDirection == carState.Properties.CabDirection)
+            {
+                carState.Properties.CabDirection = carState.Properties.CabDirection == Direction.Inbound ? Direction.Outbound : Direction.Inbound;
+            }
+            
+            if (!isPreviousCarHasDriverCab && carState.Properties.DriverCab)
+            {
+                carState.Properties.CabDirection = Direction.Inbound;
+            }
+            
+            return carState;
+        }).ToList();
+
 
         var formattedData = new OpenTetsuData
         {
@@ -138,63 +210,7 @@ public static class TrainCrewAdapter
                 },
                 MrPressure = rawTrainState.MR_Press, 
                 DistanceFromKmZero = rawTrainState.TotalLength,
-
-                // reformat rawData.CarStates to models.CarState
-                CarStates = carStates.Select((carState, index) =>
-                {
-                    // Check whether previous car has DriverCab
-                    // var previousCarHasDriverCab = index > 0 && rawTrainState.CarStates[index - 1].HasDriverCab;
-                    var isLastCar = index == rawTrainState.CarStates.Count - 1 || carState.CarModel != rawTrainState.CarStates[index + 1].CarModel;
-                    var isFirstCar = index == 0 || carState.CarModel != rawTrainState.CarStates[index - 1].CarModel;
-
-                    Direction? cabDirection = null;
-                    
-                    // <<< Outbound | Inbound >>>
-
-                    if (isFirstCar && carState.HasDriverCab)
-                    {
-                        cabDirection = Direction.Outbound;
-                    }
-                    
-                    if (isLastCar && carState.HasDriverCab)
-                    {
-                        cabDirection = Direction.Inbound;
-                    }
-
-                    // 注意：このコメントされたコードは削除するな！　将来多分使いますので。
-                    // // Determine direction of the driver cab for those that are in the middle section only.
-                    // if (!previousCarHasDriverCab && !isLastCar && !isFirstCar && carState.HasDriverCab)
-                    // {
-                    //     cabDirection = CabDirection.Inbound;
-                    // }
-                    // if (previousCarHasDriverCab && !isLastCar && !isFirstCar && carState.HasDriverCab)
-                    // {
-                    //     cabDirection = CabDirection.Outbound;
-                    // }
-                    
-                    // But if this is the last car, and the previous is a first car, this should face inbound.
-                    // if (isLastCar && previousCarHasDriverCab)
-                    // {
-                    //     cabDirection = CabDirection.Inbound;
-                    // }
-                    
-                    return new CarState
-                    {
-                        CarNo = index + 1,
-                        IsDoorClosed = carState.DoorClose,
-                        BcPressure = carState.BC_Press,
-                        Amperage = carState.Ampare,
-                        Model = carState.CarModel,
-                        Properties = new CarProperties
-                        {
-                            Pantograph = carState.HasPantograph,
-                            DriverCab = carState.HasDriverCab,
-                            ConductorCab = carState.HasConductorCab,
-                            Motor = carState.HasMotor,
-                            CabDirection = cabDirection
-                        }
-                    };
-                }).ToList(),
+                CarStates =  carStatesPass3,
 
                 Lamps = new Lamps
                 {
