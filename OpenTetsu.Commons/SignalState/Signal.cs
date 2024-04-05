@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace OpenTetsu.Commons.Signal;
+namespace OpenTetsu.Commons.SignalState;
 
 public class SignalState
 {

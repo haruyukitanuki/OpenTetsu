@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using OpenTetsu.Commons.Ats;
+using OpenTetsu.Commons.ATS;
 using OpenTetsu.Commons.Controller;
 using OpenTetsu.Commons.Route;
-using OpenTetsu.Commons.Signal;
+using OpenTetsu.Commons.Train;
 
 namespace OpenTetsu.Commons;
 
@@ -18,7 +18,7 @@ public class OpenTetsuData
     
     [JsonProperty("trainState")] public TrainState? TrainState;
     
-    [JsonProperty("signalStates")] public List<SignalState>? SignalStates;
+    [JsonProperty("signalStates")] public List<SignalState.SignalState>? SignalStates;
     
     [JsonProperty("atsState")] public AtsState? AtsState;
 

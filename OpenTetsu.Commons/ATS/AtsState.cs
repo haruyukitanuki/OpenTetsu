@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace OpenTetsu.Commons.Ats;
+namespace OpenTetsu.Commons.ATS;
 
 public class AtsState
 {

@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Compile OpenTetsu.Commons" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" delete_existing_files="true" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/OpenTetsu.Commons/bin/Release/net6.0/publish" target_framework="net6.0" uuid_high="3081343903984733269" uuid_low="-7335034332387099010" />
+    <method v="2" />
+  </configuration>
+</component>

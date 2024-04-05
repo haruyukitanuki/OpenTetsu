@@ -1,4 +1,4 @@
-namespace OpenTetsu.Commons.Signal;
+namespace OpenTetsu.Commons.SignalState;
 
 public enum SignalType
 {

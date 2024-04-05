@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
-using OpenTetsu.Commons.Train;
 
-namespace OpenTetsu.Commons;
+namespace OpenTetsu.Commons.Train;
 
 public class TrainState
 {
