@@ -87,8 +87,10 @@ public static class TrainCrewAdapter
         var direction = upCount > downCount ? Direction.Inbound : Direction.Outbound;
 
         // Convert (timespan)rawTrainState.NowTime to DateTime
-        // NowTime is a Timespan. Set the date to today.
+        // NowTime is a Timespan. Set it into Timespan with JST timezone
         var relativeNowTime = DateTime.Today.Add(rawTrainState.NowTime);
+        relativeNowTime = DateTime.SpecifyKind(relativeNowTime, DateTimeKind.Unspecified);
+        
         
         // Order the cars according to direction. 
         // For some reason the first car in CarStates is facing Otebashi and the last car is facing Tatehama.
