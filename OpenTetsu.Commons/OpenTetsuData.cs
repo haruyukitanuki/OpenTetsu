@@ -8,7 +8,9 @@ namespace OpenTetsu.Commons;
 
 public class OpenTetsuData
 {
-    [JsonProperty("runNumber")] public string? RunNumber;
+    [JsonProperty("runNumber")] public string? RunNumber; // 運行番号
+    
+    [JsonProperty("diagramNumber")] public string? DiagramNumber; // 列車番号
     
     [JsonProperty("currentTime")] public DateTime? CurrentTime;
     
