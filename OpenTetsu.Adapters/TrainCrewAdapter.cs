@@ -79,12 +79,12 @@ public static class TrainCrewAdapter
 
         // Find which direction towards
         // （下り）<<<<< 館浜 | 大路 >>>>>（上り）
-        // Count the number of 上　and 下
-        var upCount = rawTrainState.stationList.Count(station => station.StopPosName.Contains('上'));
-        var downCount = rawTrainState.stationList.Count(station => station.StopPosName.Contains('下'));
-
-        // If 上 is more than 下, then it's bound for 上
-        var direction = upCount > downCount ? Direction.Inbound : Direction.Outbound;
+        // If Diagram number is even number, it's Inbound. If it's odd, it's Outbound.
+        
+        // Remove all letters from diaName
+        var diagramNumber = new string(rawTrainState.diaName.Where(char.IsDigit).ToArray());
+        if (diagramNumber == String.Empty) diagramNumber = "0";
+        var direction = diagramNumber[^1] % 2 == 0 ? Direction.Inbound : Direction.Outbound;
 
         // Convert (timespan)rawTrainState.NowTime to DateTime
         // NowTime is a Timespan. Set it into Timespan with JST timezone
@@ -190,11 +190,54 @@ public static class TrainCrewAdapter
             
             return carState;
         }).ToList();
-
+        
+        String DetermineRunNumber(String diaName)
+        {
+            // [数字抽出]
+            // if over3000 +100
+            // if over 6000 +200
+            //
+            //     [下2桁抽出]
+            // if 奇数 -1
+            // ありがとう、ゐづるさん
+            
+            if (diaName == String.Empty) return "0";
+            
+            var runNumber = diaName;
+            
+            // If the last character is a letter, remove it
+            if (char.IsLetter(runNumber[^1])) runNumber = runNumber.Substring(0, runNumber.Length - 1);
+            
+            // If the first character is not a number, remove it (For test run and kaisou)
+            if (!char.IsDigit(runNumber[0]))
+            {
+                runNumber = runNumber[1..];
+            }
+            
+            var lastTwoDigits = runNumber.Substring(runNumber.Length - 2);
+            
+            var runNumberInt = int.Parse(lastTwoDigits);
+            
+            switch (int.Parse(runNumber))
+            {
+                case >= 6000:
+                    runNumberInt += 200;
+                    break;
+                case >= 3000:
+                    runNumberInt += 100;
+                    break;
+            }
+            
+            if (runNumberInt % 2 != 0) runNumberInt -= 1;
+            
+            runNumber = runNumberInt.ToString();
+            return runNumber;
+        }
 
         var formattedData = new OpenTetsuData
         {
-            RunNumber = rawTrainState.diaName,
+            RunNumber = DetermineRunNumber(rawTrainState.diaName),
+            DiagramNumber = rawTrainState.diaName,
             CurrentTime = relativeNowTime,
             NextStation = nextStation,
             TrainState = new TrainState
@@ -235,6 +278,8 @@ public static class TrainCrewAdapter
 
             ControllerState = new ControllerState
             {
+                PNotch = rawTrainState.Pnotch,
+                BNotch = rawTrainState.Bnotch,
                 Notch = rawTrainState.Pnotch - rawTrainState.Bnotch,
                 Reverser = rawTrainState.Reverser
             },
@@ -257,18 +302,24 @@ public static class TrainCrewAdapter
                     ? rawTrainState.stationList.Last().TotalLength - rawTrainState.TotalLength
                     : 0,
 
-                Stations = rawTrainState.stationList.Select((station, index) => new Station
+                Stations = rawTrainState.stationList.Select((station, index) =>
                 {
-                    Name = station.Name,
-                    Index = index,
-                    Timings = new StationTimings
+                    var relativeArrivalTime = DateTime.Today.Add(station.ArvTime);
+                    var relativeDepartureTime = DateTime.Today.Add(station.DepTime);
+                    
+                    return new Station
                     {
-                        Arrival = DateTime.Today.Add(station.ArvTime),
-                        Departure = DateTime.Today.Add(station.DepTime)
-                    },
-                    StopType = DetermineStopType(station.stopType),
-                    PositionName = station.StopPosName,
-                    DistanceFromKmZero = station.TotalLength
+                        Name = station.Name,
+                        Index = index,
+                        Timings = new StationTimings
+                        {
+                            Arrival = DateTime.SpecifyKind(relativeArrivalTime, DateTimeKind.Unspecified),
+                            Departure = DateTime.SpecifyKind(relativeDepartureTime, DateTimeKind.Unspecified)
+                        },
+                        StopType = DetermineStopType(station.stopType),
+                        PositionName = station.StopPosName,
+                        DistanceFromKmZero = station.TotalLength
+                    };
                 }).ToList()
             }
         };
