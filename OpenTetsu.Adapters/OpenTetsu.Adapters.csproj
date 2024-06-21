@@ -14,13 +14,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="TrainCrewInput">
-        <HintPath>..\..\tanuden-tims\tanuden-native\dll\TrainCrewInput.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\OpenTetsu.Commons\OpenTetsu.Commons.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OpenTetsu.Commons\OpenTetsu.Commons.csproj" />
+      <Reference Include="TrainCrewInput">
+        <HintPath>..\..\tanuden-tims\TanudenNative\dll\TrainCrewInput.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
