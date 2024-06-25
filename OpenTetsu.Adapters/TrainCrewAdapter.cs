@@ -191,7 +191,7 @@ public static class TrainCrewAdapter
             return carState;
         }).ToList();
         
-        String DetermineRunNumber(String diaName)
+        string? DetermineRunNumber(String diaName)
         {
             // [数字抽出]
             // if over3000 +100
@@ -201,7 +201,7 @@ public static class TrainCrewAdapter
             // if 奇数 -1
             // ありがとう、ゐづるさん
             
-            if (diaName == String.Empty) return "0";
+            if (diaName == String.Empty) return null;
             
             var runNumber = diaName;
             
