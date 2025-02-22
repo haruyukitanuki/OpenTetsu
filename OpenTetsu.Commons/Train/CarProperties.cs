@@ -5,9 +5,6 @@ namespace OpenTetsu.Commons.Train;
 
 public class CarProperties
 {
-    [JsonProperty("pantograph")]
-    public bool Pantograph;
-        
     [JsonProperty("driverCab")]
     public bool DriverCab;
         
@@ -19,4 +16,13 @@ public class CarProperties
         
     [JsonProperty("cabDirection")]
     public Direction? CabDirection;
+    
+    [JsonProperty("pantograph")]
+    public bool Pantograph;
+    
+    [JsonProperty("pantographDirection")]
+    public Direction? PantographDirection;
+
+    [JsonProperty("pantographType")] 
+    public PantographType? PantographType;
 }

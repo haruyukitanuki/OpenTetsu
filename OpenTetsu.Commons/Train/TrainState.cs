@@ -4,8 +4,11 @@ namespace OpenTetsu.Commons.Train;
 
 public class TrainState
 {
-    [JsonProperty("carStates")]
-    public List<CarState>? CarStates;
+    [JsonProperty("properties")]
+    public List<TrainProperties>? Properties;
+
+    [JsonProperty("cars")]
+    public List<CarState>? Cars;
 
     [JsonProperty("consist")]
     public int Consist;
@@ -16,9 +19,6 @@ public class TrainState
     [JsonProperty("mrPressure")]
     public float MrPressure;
 
-    [JsonProperty("nextSpeedLimit")]
-    public NextSpeedLimit? NextSpeedLimit;
-
     [JsonProperty("speed")]
     public float Speed;
 
@@ -27,10 +27,13 @@ public class TrainState
 
     [JsonProperty("speedLimitType")]
     public SpeedLimitType? SpeedLimitType;
-        
+
+    [JsonProperty("nextSpeedLimit")]
+    public NextSpeedLimit? NextSpeedLimit;
+
     [JsonProperty("gradient")]
     public float Gradient;
-        
-    [JsonProperty("distanceFromKmZero")]
-    public float DistanceFromKmZero;
+
+    [JsonProperty("distance")]
+    public float Distance;
 }

@@ -4,8 +4,8 @@ namespace OpenTetsu.Commons.Route;
 
 public class Station
 {
-    [JsonProperty("distanceFromKmZero")]
-    public float? DistanceFromKmZero;
+    [JsonProperty("distance")]
+    public float? Distance;
 
     [JsonProperty("index")]
     public int? Index;

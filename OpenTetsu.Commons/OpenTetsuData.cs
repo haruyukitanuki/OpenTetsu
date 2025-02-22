@@ -18,11 +18,11 @@ public class OpenTetsuData
     
     [JsonProperty("nextStation")] public NextStation? NextStation;
     
-    [JsonProperty("trainState")] public TrainState? TrainState;
+    [JsonProperty("train")] public TrainState? Train;
     
-    [JsonProperty("signalStates")] public List<SignalState.SignalState>? SignalStates;
+    [JsonProperty("atsState")] public AtsState? Ats;
     
-    [JsonProperty("atsState")] public AtsState? AtsState;
+    [JsonProperty("signalStates")] public List<SignalState.SignalState>? Signals;
 
     [JsonProperty("controllerState")] public ControllerState? ControllerState;
 }
