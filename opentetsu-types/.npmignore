@@ -3,3 +3,5 @@
 !**/*.d.cts
 !**/*.d.mts
 !**/*.d.*.ts
+!README.md
+!LICENSE
