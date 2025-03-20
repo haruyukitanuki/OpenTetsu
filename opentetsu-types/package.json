@@ -1,0 +1,14 @@
+{
+  "name": "opentetsu",
+  "version": "0.0.1",
+  "description": "An open source API standard for train simulators and plugins",
+  "main": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "typescript": "^5.8.2"
+  }
+}
