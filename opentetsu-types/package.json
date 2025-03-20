@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Haruyuki Tanukiji <haruyuki@tanu.ch>",
   "license": "MPL-2.0",
   "dependencies": {
     "typescript": "^5.8.2"
