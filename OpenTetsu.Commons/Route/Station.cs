@@ -18,6 +18,9 @@ public class Station
 
     [JsonProperty("stopType")]
     public StopType? StopType;
+    
+    [JsonProperty("doorDirection")]
+    public DoorDirection? DoorDirection;
 
     [JsonProperty("timings")]
     public StationTimings? Timings;

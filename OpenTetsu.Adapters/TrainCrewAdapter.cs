@@ -330,6 +330,7 @@ public static class TrainCrewAdapter
                             Arrival = DateTime.SpecifyKind(relativeArrivalTime, DateTimeKind.Unspecified),
                             Departure = DateTime.SpecifyKind(relativeDepartureTime, DateTimeKind.Unspecified)
                         },
+                        DoorDirection = station.doorDir == DoorDir.LeftSide ? DoorDirection.LeftSide : DoorDirection.RightSide,
                         StopType = DetermineStopType(station.stopType),
                         PositionName = station.StopPosName,
                         Distance = station.TotalLength
