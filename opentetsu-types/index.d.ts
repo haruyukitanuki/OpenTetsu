@@ -30,11 +30,14 @@ export interface StationTimings {
   departure: Date;
 }
 
+export type DoorDirection = "LeftSide" | "RightSide";
+
 export interface Station {
   distance: number;
   index: number;
   name: string;
   positionName: string;
+  doorDirection: DoorDirection;
   stopType: StopType;
   timings: StationTimings;
 }
