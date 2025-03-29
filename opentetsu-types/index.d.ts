@@ -1,7 +1,7 @@
 export interface OpenTetsuData {
   runNumber?: string; // 運行番号
   diagramNumber?: string; // 列車番号
-  currentTime: Date;
+  currentTime: string;
   diagram: Diagram;
   nextStation: NextStation;
   train: TrainState;
@@ -26,8 +26,8 @@ export interface ControllerState {
 export type StopType = "PassengerStop" | "OperationStop" | "Passing";
 
 export interface StationTimings {
-  arrival: Date;
-  departure: Date;
+  arrival: string;
+  departure: string;
 }
 
 export type DoorDirection = "LeftSide" | "RightSide";
