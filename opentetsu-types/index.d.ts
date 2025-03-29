@@ -69,7 +69,7 @@ export interface SignalState {
   type: SignalType;
   phase: string;
   distance: number;
-  transponder: Transponder[];
+  transponders: Transponder[];
 }
 
 export type PantographType = "SingleArm" | "ScissorArm";
