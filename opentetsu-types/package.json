@@ -1,9 +1,9 @@
 {
   "name": "opentetsu",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An open source API standard for train simulators and plugins",
-  "types": "./index.d.ts",
-  "main": "",
+  "types": "index.d.ts",
+  "main": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
