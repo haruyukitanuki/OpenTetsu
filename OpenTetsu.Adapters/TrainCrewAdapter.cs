@@ -403,6 +403,7 @@ public static class TrainCrewAdapter
                 {
                     Pantograph = carState.HasPantograph,
                     DriverCab = carState.HasDriverCab,
+                    CabDirection = null,
                     ConductorCab = carState.HasConductorCab,
                     Motor = carState.HasMotor
                 }
@@ -411,7 +412,7 @@ public static class TrainCrewAdapter
             //　Pass 2: Determine CabDirection
             var carStatesPass2 = carStatesPass1.Select((carState, index) =>
             {
-                if (!carState.Properties!.ConductorCab) return carState;
+                if (!carState.Properties!.DriverCab) return carState;
 
                 // var isPreviousCarHasDriverCab = index != 0 && carStatesPass1[index - 1].Properties!.DriverCab;
                 var isCurrentCarHasDriverCab = carState.Properties!.DriverCab;
@@ -441,6 +442,8 @@ public static class TrainCrewAdapter
             // Pass 3: Flip any car that has DriverCab and is facing the wrong direction
             var carStatesPass3 = carStatesPass2.Select((carState, index) =>
             {
+                if (!carState.Properties!.DriverCab) return carState;
+                
                 // Ignore first and last
                 if (index == 0 || index == carStatesPass2.Count - 1) return carState;
 
