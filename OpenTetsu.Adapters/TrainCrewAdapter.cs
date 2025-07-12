@@ -15,174 +15,7 @@ namespace OpenTetsu.Adapters;
 
 public static class TrainCrewAdapter
 {
-    private static readonly ReadOnlyDictionary<string, TrainProperties> RollingStockData =
-        new(
-            new Dictionary<string, TrainProperties>()
-            {
-                {
-                    "5320", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            { 4, new Direction?[] { Direction.Inbound, null, null, Direction.Outbound } }
-                        }
-                    }
-                },
-
-                {
-                    "5300", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            { 2, new Direction?[] { Direction.Both, null } },
-                            { 4, new Direction?[] { null, Direction.Both, null, null } }
-                        }
-                    }
-                },
-
-                {
-                    "4300", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            { 2, new Direction?[] { Direction.Both, null } },
-                            { 4, new Direction?[] { null, Direction.Both, null, null } }
-                        }
-                    }
-                },
-
-                {
-                    "4321", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            { 4, new Direction?[] { null, Direction.Both, null, null } }
-                        }
-                    }
-                },
-
-                {
-                    "4000", new TrainProperties
-                    {
-                        HoldBrake = false,
-                        PantographType = PantographType.ScissorArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                6,
-                                new Direction?[]
-                                    { Direction.Inbound, null, Direction.Outbound, null, null, Direction.Outbound }
-                            }
-                        }
-                    }
-                },
-
-                {
-                    "4000R", new TrainProperties
-                    {
-                        HoldBrake = false,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                6,
-                                new Direction?[]
-                                    { Direction.Inbound, null, Direction.Outbound, null, null, Direction.Outbound }
-                            }
-                        }
-                    }
-                },
-
-                {
-                    "3300V", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.ScissorArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            { 3, new Direction?[] { Direction.Outbound, null, Direction.Outbound } }
-                        }
-                    }
-                },
-
-                {
-                    "3020", new TrainProperties
-                    {
-                        HoldBrake = false,
-                        PantographType = PantographType.ScissorArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                6,
-                                new Direction?[]
-                                    { Direction.Inbound, null, Direction.Inbound, null, null, Direction.Outbound }
-                            }
-                        }
-                    }
-                },
-                {
-                    "5600", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                2,
-                                new Direction?[]
-                                    { Direction.Both, null }
-                            }
-                        }
-                    }
-                },
-                {
-                    "4600", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.ScissorArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                2,
-                                new Direction?[]
-                                    { Direction.Both, null }
-                            },
-                            {
-                                4,
-                                new Direction?[]
-                                    { null, Direction.Both, null, null }
-                            }
-                        }
-                    }
-                },
-                {
-                    "50000", new TrainProperties
-                    {
-                        HoldBrake = true,
-                        PantographType = PantographType.SingleArm,
-                        PantographDirections = new Dictionary<int, Direction?[]>
-                        {
-                            {
-                                6,
-                                new Direction?[]
-                                    { null, Direction.Outbound, Direction.Inbound, null, Direction.Both, null }
-                            }
-                        }
-                    }
-                }
-            }
-        );
-
-
-    public static OpenTetsuData FromTrainCrew(TrainCrew.TrainState rawTrainState, List<SignalInfo>? signals, DateTime currentDate)
+    public static OpenTetsuData FromTrainCrew(TrainCrew.TrainState rawTrainState, List<SignalInfo>? signals, TrainSwitch switches, DateTime currentDate)
     {
         // Format signal data
         List<SignalState> formattedSignalData = new();
@@ -208,7 +41,7 @@ public static class TrainCrewAdapter
 
         // Remove all letters from diaName
         var diagramNumber = new string(rawTrainState.diaName.Where(char.IsDigit).ToArray());
-        if (diagramNumber == String.Empty) diagramNumber = "0";
+        if (diagramNumber == string.Empty) diagramNumber = "0";
         var direction = diagramNumber[^1] % 2 == 0 ? Direction.Inbound : Direction.Outbound;
 
         // Convert (timespan)rawTrainState.NowTime to DateTime
@@ -258,7 +91,6 @@ public static class TrainCrewAdapter
             NextStation = nextStation,
             Train = new TrainState
             {
-                Properties = DetermineTrainProperties(rawCarStates),
                 Consist = rawTrainState.CarStates.Count,
                 Speed = rawTrainState.Speed,
                 SpeedLimit = rawTrainState.speedLimit,
@@ -272,7 +104,17 @@ public static class TrainCrewAdapter
                 },
                 MrPressure = rawTrainState.MR_Press,
                 Distance = rawTrainState.TotalLength,
-                Cars = DetermineCabPantoDirection(rawCarStates),
+                Cars = DetermineCabDirection(rawCarStates),
+                
+                Switches = new Switches
+                {
+                    Horn_Air = switches.Horn_Air,
+                    Horn_Electric = switches.Horn_Electric,
+                    BuzzerM = switches.buzzerM,
+                    BuzzerC = switches.buzzerC,
+                    BuzzerAuto = switches.buzzerAuto,
+                    HighBeam = switches.highBeam,
+                },
 
                 Lamps = new Lamps
                 {
@@ -388,7 +230,7 @@ public static class TrainCrewAdapter
             return SignalType.Standard;
         }
 
-        List<CarState> DetermineCabPantoDirection(List<TrainCrew.CarState> rawCars)
+        List<CarState> DetermineCabDirection(List<TrainCrew.CarState> rawCars)
         {
             // Process carStates
             // Pass 1: Format into OpenTetsu without CabDirection
@@ -413,8 +255,7 @@ public static class TrainCrewAdapter
             var carStatesPass2 = carStatesPass1.Select((carState, index) =>
             {
                 if (!carState.Properties!.DriverCab) return carState;
-
-                // var isPreviousCarHasDriverCab = index != 0 && carStatesPass1[index - 1].Properties!.DriverCab;
+                
                 var isCurrentCarHasDriverCab = carState.Properties!.DriverCab;
 
                 // First and last car
@@ -467,88 +308,9 @@ public static class TrainCrewAdapter
                 return carState;
             }).ToList();
             
-            // Pass 4: Handle pantograph directions
-            var carStatesPass4 = carStatesPass3;
-            List<List<string>> carModels = new();
-            List<string> tempCarModels = new();
-            
-            foreach (var car in carStatesPass4)
-            {
-                tempCarModels.Add(car.Model!);
-
-                // Split at renketsubu
-                if (
-                    // Reminder: CarNo starts from 1 and not 0. (It is human-readable)
-                    car.Properties!.DriverCab &&
-                    car.Properties.CabDirection == Direction.Inbound &&
-                    car.CarNo - 1 != 0 && car.CarNo != rawCars.Count
-                )
-                {
-                    // Note to future self: Doing new List<string> will copy the list, not reference it.
-                    carModels.Add(new List<string>(tempCarModels));
-                    tempCarModels.Clear();
-                }
-                
-                // If reached the end of the train, append
-                if (car.CarNo == rawCars.Count && tempCarModels.Count != 0)
-                {
-                    carModels.Add(new List<string>(tempCarModels));
-                    tempCarModels.Clear();
-                }
-            }
-
-            var entireTrainIndex = 0;
-            foreach (var section in carModels)
-            {
-                foreach (var (carModel, carIndex) in section.Select((item, index) => (item, index)))
-                {
-                    // If train type doesn't exist, initialise with default values
-                    if (!RollingStockData.TryGetValue(carModel, out var targetRollingStock))
-                    {
-                        Console.WriteLine("Unsupported rolling stock: " + carModel);
-                        carStatesPass4[entireTrainIndex].Properties!.PantographDirection = Direction.Both;
-                        carStatesPass4[entireTrainIndex].Properties!.PantographType = PantographType.ScissorArm;
-                    }
-                    else
-                    {
-                        carStatesPass4[entireTrainIndex].Properties!.PantographDirection = targetRollingStock.PantographDirections!.TryGetValue(section.Count, out var directions) ? directions[carIndex] : Direction.Both;
-                        carStatesPass4[entireTrainIndex].Properties!.PantographType = targetRollingStock.PantographType;
-                    }
-                        
-                    entireTrainIndex++;
-                }
-            }
-
-            return carStatesPass4;
+            return carStatesPass3;
         }
-
-        List<TrainProperties> DetermineTrainProperties(List<TrainCrew.CarState> rawCars)
-        {
-            // Get unique car models
-            var carModels = rawCars.Select(car => car.CarModel).Distinct().ToList();
-            
-            List<TrainProperties> trainProperties = new();
-
-            foreach (var model in carModels)
-            {
-                if (RollingStockData.TryGetValue(model, out var modelData))
-                {
-                    // Copy the data and set the model
-                    modelData.Model = model;
-                    trainProperties.Add(modelData);
-                }
-                else
-                {
-                    // Handle if unsupported rolling stock
-                    var defaultModelData = RollingStockData["4000"];
-                    defaultModelData.Model = model;
-                    trainProperties.Add(defaultModelData);
-                }
-            }
-            
-            return trainProperties;
-        }
-
+        
         string? DetermineRunNumber(String diaName)
         {
             // [数字抽出]

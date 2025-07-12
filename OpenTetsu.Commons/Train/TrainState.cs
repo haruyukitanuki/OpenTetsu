@@ -4,9 +4,6 @@ namespace OpenTetsu.Commons.Train;
 
 public class TrainState
 {
-    [JsonProperty("properties")]
-    public List<TrainProperties>? Properties;
-
     [JsonProperty("cars")]
     public List<CarState>? Cars;
 
@@ -36,4 +33,7 @@ public class TrainState
 
     [JsonProperty("distance")]
     public float Distance;
+    
+    [JsonProperty("switches")]
+    public Switches? Switches;
 }

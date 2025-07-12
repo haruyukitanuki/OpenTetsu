@@ -119,13 +119,6 @@ export interface NextSpeedLimit {
   type: SpeedLimitType;
 }
 
-export interface TrainStateProperties {
-  model: string;
-  holdBrake: boolean;
-  pantographType: PantographType;
-  pantographDirections: Map<number, Direction[] | null>;
-}
-
 export interface TrainState {
   cars: CarState[];
   consist: number;
@@ -137,5 +130,14 @@ export interface TrainState {
   speedLimitType: SpeedLimitType;
   gradient: number;
   distance: number;
-  properties: TrainStateProperties;
+  switches: Switches;
+}
+
+export interface Switches {
+  hornAir: boolean;
+  hornElectric: boolean;
+  buzzerM: boolean;
+  buzzerC: boolean;
+  buzzerAuto: boolean;
+  highBeam: boolean;
 }
